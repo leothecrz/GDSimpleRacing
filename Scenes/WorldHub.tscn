@@ -1,30 +1,36 @@
-[gd_scene load_steps=6 format=3 uid="uid://d4a3l21yf7ynx"]
+[gd_scene load_steps=9 format=3 uid="uid://d4a3l21yf7ynx"]
 
 [ext_resource type="PackedScene" uid="uid://dr7mxq2iswcg" path="res://Scenes/CarBase.tscn" id="1_r5x3w"]
 
-[sub_resource type="Environment" id="Environment_cqluu"]
-background_mode = 1
-background_color = Color(0.691853, 0.928817, 0.96721, 1)
-ambient_light_color = Color(0.921153, 0.806328, 1.92523e-06, 1)
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_t8t3x"]
+
+[sub_resource type="Sky" id="Sky_th4cx"]
+sky_material = SubResource("ProceduralSkyMaterial_t8t3x")
+
+[sub_resource type="Environment" id="Environment_87qj4"]
+background_mode = 2
+sky = SubResource("Sky_th4cx")
+ambient_light_color = Color(1, 1, 1, 1)
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_y2kww"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_36w1b"]
 size = Vector3(30, 1, 30)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oj7ws"]
+albedo_color = Color(0.370105, 0.400627, 0.400246, 1)
+
 [sub_resource type="BoxMesh" id="BoxMesh_l84t5"]
+material = SubResource("StandardMaterial3D_oj7ws")
 size = Vector3(30, 1, 30)
 
 [node name="HubWorld" type="Node3D"]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0174866, 75.3129, 0)
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_87qj4")
 
-[node name="Cam Test" type="Camera3D" parent="."]
-transform = Transform3D(-1, 1.51808e-08, -8.60946e-08, 0, 0.984808, 0.173648, 8.74228e-08, 0.173648, -0.984808, 0, 15, -25)
-environment = SubResource("Environment_cqluu")
-current = true
-fov = 100.0
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0174866, 35.3806, 0)
 
 [node name="Ground" type="StaticBody3D" parent="."]
 physics_material_override = SubResource("PhysicsMaterial_y2kww")
@@ -36,4 +42,4 @@ shape = SubResource("BoxShape3D_36w1b")
 mesh = SubResource("BoxMesh_l84t5")
 
 [node name="Car" parent="." instance=ExtResource("1_r5x3w")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.39373, 12.438, 0)
