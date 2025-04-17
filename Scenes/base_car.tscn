@@ -1,0 +1,67 @@
+[gd_scene load_steps=6 format=3 uid="uid://dlnjwter5em87"]
+
+[ext_resource type="Script" path="res://Scripts/Cars/base_car.gd" id="1_w42rn"]
+[ext_resource type="CylinderMesh" uid="uid://bbc8l24apqq5p" path="res://Resources/Meshes/wheel_mesh.tres" id="2_vcw5s"]
+[ext_resource type="PackedScene" uid="uid://cnd7vks3lxvwn" path="res://Scenes/base_car_caster.tscn" id="4_oo0kv"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2xpqb"]
+size = Vector3(3, 0.75, 1.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ydgyr"]
+size = Vector3(3, 0.75, 1.25)
+
+[node name="RigidBody3D" type="RigidBody3D"]
+collision_layer = 2
+gravity_scale = 0.01
+script = ExtResource("1_w42rn")
+
+[node name="CarCollision" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_2xpqb")
+
+[node name="CarMesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_ydgyr")
+skeleton = NodePath("")
+
+[node name="Wheels" type="Node3D" parent="."]
+
+[node name="FR" type="MeshInstance3D" parent="Wheels"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.25, -0.619, 0.673)
+mesh = ExtResource("2_vcw5s")
+
+[node name="FL" type="MeshInstance3D" parent="Wheels"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 1.25, -0.619, -0.673)
+mesh = ExtResource("2_vcw5s")
+
+[node name="BR" type="MeshInstance3D" parent="Wheels"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.25, -0.619, 0.673)
+mesh = ExtResource("2_vcw5s")
+
+[node name="BL" type="MeshInstance3D" parent="Wheels"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.25, -0.619, -0.673)
+mesh = ExtResource("2_vcw5s")
+
+[node name="Casters" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+
+[node name="FR" parent="Casters" instance=ExtResource("4_oo0kv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, -0.375, 0.626)
+
+[node name="FL" parent="Casters" instance=ExtResource("4_oo0kv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, -0.375, -0.626)
+
+[node name="BR" parent="Casters" instance=ExtResource("4_oo0kv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, -0.375, 0.626)
+
+[node name="BL" parent="Casters" instance=ExtResource("4_oo0kv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, -0.375, -0.626)
+
+[node name="CamTarget" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1, 0)
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 1, 0)
+remote_path = NodePath("../CamTarget")
+
+[node name="PlayerCam" type="Camera3D" parent="RemoteTransform3D"]
+transform = Transform3D(-4.37114e-08, 0.173648, -0.984808, 0, 0.984808, 0.173648, 1, 7.59039e-09, -4.30473e-08, 0, 0, 0)
+fov = 90.0

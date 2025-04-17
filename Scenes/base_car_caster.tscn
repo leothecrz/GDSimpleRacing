@@ -1,0 +1,41 @@
+[gd_scene load_steps=9 format=3 uid="uid://cnd7vks3lxvwn"]
+
+[ext_resource type="Script" path="res://Scripts/Cars/base_car_caster.gd" id="1_txv5k"]
+[ext_resource type="Material" uid="uid://5jfidnjn4umq" path="res://Resources/Materials/Xmat.tres" id="1_xhb5h"]
+[ext_resource type="Material" uid="uid://cpbxi3cxte6lp" path="res://Resources/Materials/Ymat.tres" id="2_4r4sd"]
+[ext_resource type="Material" uid="uid://1ctqdx30wojf" path="res://Resources/Materials/Zmat.tres" id="3_l6mr1"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_t7gey"]
+radius = 0.05
+height = 0.1
+
+[sub_resource type="BoxMesh" id="BoxMesh_wn7hi"]
+material = ExtResource("1_xhb5h")
+size = Vector3(0.5, 0.02, 0.02)
+
+[sub_resource type="BoxMesh" id="BoxMesh_j8jlv"]
+material = ExtResource("2_4r4sd")
+size = Vector3(0.02, 0.5, 0.02)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ri8mk"]
+material = ExtResource("3_l6mr1")
+size = Vector3(0.02, 0.02, 0.5)
+
+[node name="BaseCarCaster" type="RayCast3D"]
+target_position = Vector3(0, -0.5, 0)
+script = ExtResource("1_txv5k")
+
+[node name="COLPOINT" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_t7gey")
+
+[node name="XForce" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.25, 0, 0)
+mesh = SubResource("BoxMesh_wn7hi")
+
+[node name="YForce" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+mesh = SubResource("BoxMesh_j8jlv")
+
+[node name="ZForce" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.25)
+mesh = SubResource("BoxMesh_ri8mk")

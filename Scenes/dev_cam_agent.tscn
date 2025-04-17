@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://b4gd86afio7p8"]
+
+[ext_resource type="Script" path="res://Scripts/Dev/dev_cam_agent.gd" id="1_ycfud"]
+
+[node name="CAMAGENT" type="Camera3D"]
+current = true
+script = ExtResource("1_ycfud")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.409, -5.45)
+text = "LABEL UI"

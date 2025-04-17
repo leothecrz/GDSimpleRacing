@@ -1,6 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://d4a3l21yf7ynx"]
+[gd_scene load_steps=11 format=3 uid="uid://d4a3l21yf7ynx"]
 
-[ext_resource type="PackedScene" uid="uid://dr7mxq2iswcg" path="res://Scenes/CarBase.tscn" id="1_r5x3w"]
+[ext_resource type="Script" path="res://Scripts/world_hub.gd" id="1_i7mf5"]
+[ext_resource type="PackedScene" uid="uid://dlnjwter5em87" path="res://Scenes/base_car.tscn" id="2_8lfj3"]
+[ext_resource type="PackedScene" uid="uid://b4gd86afio7p8" path="res://Scenes/dev_cam_agent.tscn" id="3_uh36i"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_t8t3x"]
 
@@ -18,21 +20,28 @@ ambient_light_color = Color(1, 1, 1, 1)
 size = Vector3(30, 1, 30)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oj7ws"]
-albedo_color = Color(0.370105, 0.400627, 0.400246, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_l84t5"]
 material = SubResource("StandardMaterial3D_oj7ws")
 size = Vector3(30, 1, 30)
 
 [node name="HubWorld" type="Node3D"]
+script = ExtResource("1_i7mf5")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_87qj4")
 
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0.0660229, 6.26569, 0.0503262)
+spot_range = 12.517
+spot_attenuation = 0.0
+spot_angle = 34.11
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0174866, 35.3806, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46.073, 19.0939, 13.3861)
 
 [node name="Ground" type="StaticBody3D" parent="."]
+collision_mask = 3
 physics_material_override = SubResource("PhysicsMaterial_y2kww")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
@@ -41,5 +50,22 @@ shape = SubResource("BoxShape3D_36w1b")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
 mesh = SubResource("BoxMesh_l84t5")
 
-[node name="Car" parent="." instance=ExtResource("1_r5x3w")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.39373, 12.438, 0)
+[node name="Ground2" type="StaticBody3D" parent="."]
+transform = Transform3D(0.19, 0, 0, 0, 0.182149, 0.0540518, 0, -0.0540518, 0.182149, 0.19524, 2.22075, -0.494804)
+collision_mask = 3
+physics_material_override = SubResource("PhysicsMaterial_y2kww")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground2"]
+shape = SubResource("BoxShape3D_36w1b")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground2"]
+mesh = SubResource("BoxMesh_l84t5")
+
+[node name="BaseCar" parent="." instance=ExtResource("2_8lfj3")]
+transform = Transform3D(-0.006161, 0, -0.999981, 0, 1, 0, 0.999981, 0, -0.006161, 0, 3.745, -1.068)
+gravity_scale = 1.0
+SPRING_DAMP = 10.0
+
+[node name="CAM_AGENT" parent="." node_paths=PackedStringArray("carRef") instance=ExtResource("3_uh36i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.263261, 3.14012, 5.41639)
+carRef = NodePath("../BaseCar")
